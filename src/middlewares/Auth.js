@@ -2,23 +2,22 @@ const User = require("../models/UserModel");
 
 module.exports = {
   private: async (req, res, next) => {
-    if (!req.query.token && req.body.token) {
+    if (!req.query.token && !req.body.token) {
       res.status(401).json({ error: "not allowed" });
     }
 
-    let token = "";
+    let tokenUser = "";
 
     if (req.query.token) {
-      token = req.query.token;
+      tokenUser = req.query.token;
     }
     if (req.body.token) {
-      token = req.body.token;
+      tokenUser = req.body.token;
     }
 
-    const user = await User.findOne({ token });
-
+    const user = await User.findOne({ tokenUser });
     if (!user) {
-      res.status(401).json({ error: "not allowed" });
+      res.status(401).json({ error: "Erro de token" });
       return;
     }
     next();

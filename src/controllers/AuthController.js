@@ -9,6 +9,7 @@ module.exports = {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.json({ error: errors.mapped() });
+      return;
     }
     const data = matchedData(req);
 
